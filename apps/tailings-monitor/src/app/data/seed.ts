@@ -8,11 +8,11 @@ export const seedDataset: TailingsDataset = {
     { id: 'P-S01', name: '主坝渗流计 S01', zone: '主坝', type: '渗流', longitude: 112.827, latitude: 40.106, status: '正常', currentValue: 1.8, unit: 'L/s', thresholdId: 'T-S', lastInspectionAt: '2026-09-29T07:40:00' },
     { id: 'P-R01', name: '库区雨量站 R01', zone: '库区', type: '降雨', longitude: 112.861, latitude: 40.132, status: '正常', currentValue: 24.6, unit: 'mm/h', thresholdId: 'T-R', lastInspectionAt: '2026-09-29T08:00:00' }
   ],
-  thresholds: [
-    { id: 'T-D', type: '位移', warning: 10, alarm: 16, changeRate: 3, unit: 'mm/d', enabled: true, version: 4 },
-    { id: 'T-W', type: '水位', warning: 871, alarm: 873, changeRate: 0.5, unit: 'm/h', enabled: true, version: 3 },
-    { id: 'T-S', type: '渗流', warning: 2.2, alarm: 3, changeRate: 0.4, unit: 'L/s', enabled: true, version: 5 },
-    { id: 'T-R', type: '降雨', warning: 30, alarm: 50, changeRate: 10, unit: 'mm/h', enabled: true, version: 2 }
+  thresholdVersions: [
+    { id: 'T-D-v4', thresholdId: 'T-D', type: '位移', warning: 10, alarm: 16, changeRate: 3, unit: 'mm/d', version: 4, status: '生效中', submittedBy: '值班员 冯青', submittedAt: '2026-09-20T09:00:00', effectiveFrom: '2026-09-20T09:00:00', changeNote: '汛期前收紧累计位移报警值。' },
+    { id: 'T-W-v3', thresholdId: 'T-W', type: '水位', warning: 871, alarm: 873, changeRate: 0.5, unit: 'm/h', version: 3, status: '生效中', submittedBy: '值班员 冯青', submittedAt: '2026-09-18T09:00:00', effectiveFrom: '2026-09-18T09:00:00', changeNote: '结合汛限水位调整速率阈值。' },
+    { id: 'T-S-v5', thresholdId: 'T-S', type: '渗流', warning: 2.2, alarm: 3, changeRate: 0.4, unit: 'L/s', version: 5, status: '生效中', submittedBy: '值班员 冯青', submittedAt: '2026-09-15T09:00:00', effectiveFrom: '2026-09-15T09:00:00', changeNote: '渗流量年度复核后发布。' },
+    { id: 'T-R-v2', thresholdId: 'T-R', type: '降雨', warning: 30, alarm: 50, changeRate: 10, unit: 'mm/h', version: 2, status: '生效中', submittedBy: '值班员 冯青', submittedAt: '2026-09-10T09:00:00', effectiveFrom: '2026-09-10T09:00:00', changeNote: '降雨预警分级初版。' }
   ],
   readings: [
     { id: 'RD-1', pointId: 'P-D01', value: 18.7, unit: 'mm', capturedAt: '2026-09-29T08:20:00', deviceId: 'GNSS-D01', quality: '有效' },
@@ -20,24 +20,33 @@ export const seedDataset: TailingsDataset = {
     { id: 'RD-3', pointId: 'P-D01', value: 13.8, unit: 'mm', capturedAt: '2026-09-29T06:20:00', deviceId: 'GNSS-D01', quality: '有效' },
     { id: 'RD-4', pointId: 'P-W01', value: 873.4, unit: 'm', capturedAt: '2026-09-29T07:55:00', deviceId: 'WL-W01', quality: '有效' }
   ],
+  evaluations: [
+    { readingId: 'RD-1', originalVerdict: '异常', originalBasisVersionId: 'T-D-v4', originalEvaluatedAt: '2026-09-29T08:25:00', currentVerdict: '异常', basisVersionId: 'T-D-v4', recomputeStatus: '原判有效', jobId: '', evaluatedAt: '2026-09-29T08:25:00' },
+    { readingId: 'RD-2', originalVerdict: '异常', originalBasisVersionId: 'T-D-v4', originalEvaluatedAt: '2026-09-29T07:25:00', currentVerdict: '异常', basisVersionId: 'T-D-v4', recomputeStatus: '原判有效', jobId: '', evaluatedAt: '2026-09-29T07:25:00' },
+    { readingId: 'RD-3', originalVerdict: '预警', originalBasisVersionId: 'T-D-v4', originalEvaluatedAt: '2026-09-29T06:25:00', currentVerdict: '预警', basisVersionId: 'T-D-v4', recomputeStatus: '原判有效', jobId: '', evaluatedAt: '2026-09-29T06:25:00' },
+    { readingId: 'RD-4', originalVerdict: '预警', originalBasisVersionId: 'T-W-v3', originalEvaluatedAt: '2026-09-29T08:00:00', currentVerdict: '预警', basisVersionId: 'T-W-v3', recomputeStatus: '原判有效', jobId: '', evaluatedAt: '2026-09-29T08:00:00' }
+  ],
   anomalies: [
     {
-      id: 'AN-260929-01', pointId: 'P-D01', title: '主坝D01累计位移超过报警阈值', severity: '重大', status: '待负责人审批', openedAt: '2026-09-29T08:25:00', owner: '坝体安全组', triggerReadingId: 'RD-1', observedValue: '18.7 mm，昨日变化4.2 mm/d', version: 7, closedAt: '',
+      id: 'AN-260929-01', pointId: 'P-D01', title: '主坝D01累计位移超过报警阈值', severity: '重大', status: '待负责人审批', openedAt: '2026-09-29T08:25:00', owner: '坝体安全组', triggerReadingId: 'RD-1', observedValue: '18.7 mm，昨日变化4.2 mm/d', basisVersionId: 'T-D-v4', basisHistory: [{ basisVersionId: 'T-D-v4', severity: '重大', summary: '依据T-D-v4：累计位移18.7mm超过报警值16mm，速率4.2mm/d超过3mm/d。', changedAt: '2026-09-29T08:25:00', changedBy: '阈值引擎' }], approvalHold: false, holdReason: '', closedAt: '', version: 7,
       fieldReviews: [{ id: 'FR-1', inspector: '宋立', arrivedAt: '2026-09-29T09:10:00', observed: '坝顶排水沟未见明显开裂，D01附近无新增裂缝，基准点稳定。', evidence: 'D01近景照片、基准点复核记录、GNSS原始观测文件', reassessment: '读数有效，位移趋势仍上升，建议立即降低库水位并加密监测。', version: 2 }],
       opinions: [
         { id: 'OP-1', specialist: '周岩', discipline: '岩土', content: '近三日位移速率持续高于阈值，需结合孔隙水压力分析潜在滑面。', conclusion: '支持结论', createdAt: '2026-09-29T10:20:00' },
         { id: 'OP-2', specialist: '许洁', discipline: '水文', content: '库水位仍接近警戒线，建议优先降低库水位并核对上游来水。', conclusion: '补充证据', createdAt: '2026-09-29T10:45:00' }
       ],
-      plan: { id: 'PL-1', action: '降低库水位', owner: '库区调度班', deadline: '2026-09-29T18:00:00', conditions: '每2小时复测D01、D02和W01；位移速率恢复至3mm/d以下并稳定12小时后，负责人可关闭异常。', emergencyLinked: true, approvedBy: '', approvedAt: '' }
+      plan: { id: 'PL-1', action: '降低库水位', owner: '库区调度班', deadline: '2026-09-29T18:00:00', conditions: '每2小时复测D01、D02和W01；位移速率恢复至3mm/d以下并稳定12小时后，负责人可关闭异常。', emergencyLinked: true, basisVersionId: 'T-D-v4', approvedBy: '', approvedAt: '' }
     },
     {
-      id: 'AN-260929-02', pointId: 'P-W01', title: '库水位短时上升速率超预警值', severity: '较高', status: '原因调查中', openedAt: '2026-09-29T08:00:00', owner: '库区调度班', triggerReadingId: 'RD-4', observedValue: '873.4 m，1小时上升0.6 m', version: 4, closedAt: '',
+      id: 'AN-260929-02', pointId: 'P-W01', title: '库水位短时上升速率超预警值', severity: '较高', status: '原因调查中', openedAt: '2026-09-29T08:00:00', owner: '库区调度班', triggerReadingId: 'RD-4', observedValue: '873.4 m，1小时上升0.6 m', basisVersionId: 'T-W-v3', basisHistory: [{ basisVersionId: 'T-W-v3', severity: '较高', summary: '依据T-W-v3：1小时上升0.6m超过速率阈值0.5m/h，水位873.4m达到报警值。', changedAt: '2026-09-29T08:00:00', changedBy: '阈值引擎' }], approvalHold: false, holdReason: '', closedAt: '', version: 4,
       fieldReviews: [], opinions: [{ id: 'OP-3', specialist: '许洁', discipline: '水文', content: '上游降雨汇流导致入湖量增加，需核实泄洪闸状态。', conclusion: '支持结论', createdAt: '2026-09-29T09:00:00' }],
-      plan: { id: 'PL-2', action: '加密监测', owner: '库区调度班', deadline: '2026-09-29T14:00:00', conditions: '每小时记录水位与入库流量，达到874.0m时启动应急联动。', emergencyLinked: false, approvedBy: '', approvedAt: '' }
+      plan: { id: 'PL-2', action: '加密监测', owner: '库区调度班', deadline: '2026-09-29T14:00:00', conditions: '每小时记录水位与入库流量，达到874.0m时启动应急联动。', emergencyLinked: false, basisVersionId: 'T-W-v3', approvedBy: '', approvedAt: '' }
     }
   ],
+  recomputeJobs: [],
+  conclusions: [],
+  reviewPackages: [],
   audit: [
-    { id: 'A-1', entityId: 'P-D01', action: '生成异常', operator: '阈值引擎', detail: '累计位移18.7mm超过报警阈值16mm', createdAt: '2026-09-29T08:25:00' },
+    { id: 'A-1', entityId: 'P-D01', action: '生成异常', operator: '阈值引擎', detail: '依据T-D-v4：累计位移18.7mm超过报警阈值16mm', createdAt: '2026-09-29T08:25:00' },
     { id: 'A-2', entityId: 'AN-260929-01', action: '提交现场复核', operator: '宋立', detail: '原始读数有效，位移趋势仍上升', createdAt: '2026-09-29T09:25:00' },
     { id: 'A-3', entityId: 'AN-260929-01', action: '补充专业意见', operator: '周岩', detail: '建议结合孔隙水压力分析潜在滑面', createdAt: '2026-09-29T10:20:00' }
   ]

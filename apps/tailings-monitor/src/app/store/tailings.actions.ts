@@ -7,6 +7,11 @@ export const TailingsActions = createActionGroup({
     'Load Dataset': emptyProps(),
     'Load Dataset Success': props<{ dataset: TailingsDataset }>(),
     'Load Dataset Failure': props<{ error: string }>(),
+    'Submit Threshold Draft': props<{ thresholdId: string; warning: number; alarm: number; changeRate: number; changeNote: string }>(),
+    'Accept Recompute': props<{ jobId: string }>(),
+    'Finalize Recompute': props<{ jobId: string }>(),
+    'Toggle Fail Next Recompute': emptyProps(),
+    'Confirm Recompute Conclusion': props<{ conclusionId: string }>(),
     'Submit Field Review': props<{ anomalyId: string; review: FieldReview }>(),
     'Add Expert Opinion': props<{ anomalyId: string; opinion: ExpertOpinion }>(),
     'Save Disposition Plan': props<{ anomalyId: string; plan: DispositionPlan }>(),
@@ -16,6 +21,9 @@ export const TailingsActions = createActionGroup({
     'Select Anomaly': props<{ anomalyId: string }>(),
     'Update Keyword': props<{ keyword: string }>(),
     'Update Status': props<{ status: string }>(),
+    'Export Review Package': props<{ label: string }>(),
+    'Reopen Review Package': props<{ packageId: string }>(),
+    'Close Review Package': emptyProps(),
     'Add Audit': props<{ entry: AuditEntry }>(),
     'Reset Demo': emptyProps()
   }
