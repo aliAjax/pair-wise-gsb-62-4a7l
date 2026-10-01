@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nx serve tailings-monitor",
     "build": "nx build tailings-monitor --skip-nx-cache",
-    "preview": "nx serve tailings-monitor --configuration=production"
+    "preview": "nx serve tailings-monitor --configuration=production",
+    "verify": "tsc tools/verify-workflow.ts --outDir .verify --module commonjs --target ES2020 --moduleResolution node --skipLibCheck --rootDir . && node .verify/tools/verify-workflow.js"
   },
   "dependencies": {
     "@angular/animations": "^19.2.0",
